@@ -172,4 +172,4 @@ cython_debug/
 .pypirc
 
 #data
-model_training/data
+model_training/data/iris.csv
