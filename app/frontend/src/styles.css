@@ -1,0 +1,191 @@
+body, html, h1, h2, h3, h4, h5, h6, p, ul, ol, li, figure, figcaption, blockquote, dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #90bbdb;
+  color: #333;
+  background-image: url('../public/layered-waves-haikei.svg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+.flex {
+  display: flex;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+  width: calc(100% - 20px); /* Ajuster la largeur pour tenir compte des marges internes */
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1em;
+  transition: background-color 0.3s;
+  margin: 2px 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+button.add-friend, button.remove-friend {
+  padding: 5px 10px;
+}
+
+button.add-friend {
+  background-color: #4CAF50;
+}
+
+button.remove-friend {
+  background-color: #f44336;
+}
+
+button.add-friend:hover {
+  background-color: #45a049;
+}
+
+button.remove-friend:hover {
+  background-color: #d32f2f;
+}
+
+.sidebar {
+  width: 20%;
+  /*border-right: 1px solid #ccc; */
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-right: 20px;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.2); /* Fond blanc avec opacité */
+  border-radius: 8px; /* Coins arrondis pour un effet plus doux */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  /*height: 100%;*/
+}
+
+.sidebar > * {
+  margin-bottom: 20px;
+}
+.content > * {
+  margin-bottom: 20px;
+}
+
+.header {
+  text-align: center;
+  font-size: 2.5em;
+  color: #90bbdb; /* Bleu pour le texte */
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+  border-radius: 10px;
+  z-index: -1; /* Placer le fond derrière le texte */
+}
+
+.scrollable {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.dashboard_container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  background: none;
+  overflow: hidden;
+  height: auto;
+  margin: 0 auto;
+}
+.dashboard_content {
+  display: flex;
+  flex: 1;
+  margin-top: 43px;
+  overflow: auto;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home, .register, .login {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  justify-content: center;
+}
+
+.home_buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+.home-button {
+  margin: 0 10px;
+}
+
+.register-container, .login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  background: transparent;
+}

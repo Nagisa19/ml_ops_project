@@ -1,0 +1,40 @@
+services:
+  rest_server:
+    build: ./backend
+    container_name: rest_server
+    restart: unless-stopped
+    networks:
+      - srv_private
+
+  front_react:
+    build: ./frontend
+    container_name: front_react
+    restart: unless-stopped
+    # Environnement de développement
+    # volumes:
+    #   - ./frontend:/usr/src/app
+    networks: 
+      - srv_private
+    depends_on:
+      - rest_server
+
+  web_server:
+    image: nginx:latest
+    container_name: web_server
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - web_public
+      - srv_private
+    depends_on:
+      - front_react
+      - rest_server
+
+networks:
+  srv_private:
+    internal: true
+  web_public:
+    name: public
