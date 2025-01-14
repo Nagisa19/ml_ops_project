@@ -1,6 +1,6 @@
 FROM python:3.11-bookworm
 
-WORKDIR /usr/src/app
+WORKDIR /backend
 
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
