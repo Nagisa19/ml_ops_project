@@ -1,0 +1,29 @@
+name: Push to Staging
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  push-to-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Vérifier le code
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Configurer Git pour push sur une autre branche
+    - name: Set up Git for Push
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    # Pousser les changements de dev vers staging
+    - name: Push to Staging Branch
+      run: |
+        git fetch origin
+        git checkout -b staging origin/staging || git checkout staging
+        git merge --no-edit dev
+        git push origin staging

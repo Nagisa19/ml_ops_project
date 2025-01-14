@@ -1,0 +1,51 @@
+name: Pull Request to Dev
+
+on:
+  pull_request:
+    branches:
+      - dev
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Vérifier le code
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Configurer Docker
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    # Construire et démarrer les conteneurs avec docker-compose
+    - name: Start Flask App with Docker Compose
+      run: |
+        cd app/
+        docker-compose up -d
+
+    # Attendre que l'application soit prête
+    - name: Wait for Flask App to be Ready
+      run: |
+        until curl -X GET http://localhost/api/; do
+          echo "Waiting for Flask app to start...";
+          sleep 5;
+        done
+
+    # Exécuter les tests Flask à l'intérieur du conteneur
+    - name: Run Integration Tests
+      run: |
+        docker exec rest_server pytest tests/
+
+    # Arrêter et nettoyer les conteneurs après les tests
+    - name: Clean Up Docker Containers
+      run: |
+        cd app/
+        docker-compose down
+
+    # Permettre une fusion manuelle si tout passe
+    - name: Approve Merge
+      if: success()
+      uses: hmarr/auto-approve-action@v4
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
