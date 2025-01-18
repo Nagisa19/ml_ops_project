@@ -1,9 +1,10 @@
 name: Staging to Production
 
 on:
-  push:
-    branches:
-      - staging
+  workflow_run:
+    workflows: ["Push to Staging"]
+    types:
+      - completed
 
 jobs:
   e2e-tests:
