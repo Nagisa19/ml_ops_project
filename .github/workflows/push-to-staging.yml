@@ -23,8 +23,7 @@ jobs:
     # Pousser les changements de dev vers staging
     - name: Push to Staging Branch
       run: |
-        git fetch origin
-        git checkout -b staging origin/staging || git checkout staging
-        git merge --no-edit --allow-unrelated-histories dev
-        git push origin staging
-
+          git fetch origin
+          git checkout -b staging origin/staging || git checkout staging
+          git merge -X theirs dev --no-edit
+          git push origin staging
