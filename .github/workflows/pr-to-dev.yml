@@ -50,4 +50,4 @@ jobs:
       if: success()
       uses: hmarr/auto-approve-action@v4
       with:
-        github-token: ${{ secrets.ACCESS_TOKEN }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
