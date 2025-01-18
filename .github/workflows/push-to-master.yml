@@ -14,33 +14,33 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Étape 2 : Connexion à DockerHub
+    # Connexion à DockerHub
     - name: Log in to DockerHub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    # Étape 3 : Construire les images Docker
-    - name: Build Images
-      run: |
-        docker-compose -f app/docker-compose.yml build
+    # Construire et pousser l'image du backend
+    - name: Build and Push Backend Image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./app/backend
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/ml_ops_rest_server:latest
 
-    # Étape 4 : Taguer les images pour Docker Hub
-    - name: Tag Images
-      run: |
-        docker tag ml_ops_rest_server ${{ secrets.DOCKER_USERNAME }}/ml_ops_rest_server:latest
-        docker tag ml_ops_front_react ${{ secrets.DOCKER_USERNAME }}/ml_ops_front_react:latest
-        docker tag ml_ops_web_server ${{ secrets.DOCKER_USERNAME }}/ml_ops_web_server:latest
+    # Construire et pousser l'image du frontend
+    - name: Build and Push Frontend Image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./app/frontend
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/ml_ops_front_react:latest
 
-    # Étape 5 : Pousser les images vers DockerHub
-    - name: Push Images to DockerHub
-      run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/ml_ops_rest_server:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/ml_ops_front_react:latest
-        docker push ${{ secrets.DOCKER_USERNAME }}/ml_ops_web_server:latest
-
-    # Étape 6 : Nettoyer les conteneurs après le build
-    - name: Clean Up
-      run: |
-        docker-compose -f app/docker-compose.yml down
+    # Construire et pousser l'image du serveur web
+    - name: Build and Push Web Server Image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./app/nginx
+        push: true
+        tags: ${{ secrets.DOCKER_USERNAME }}/ml_ops_web_server:latest
