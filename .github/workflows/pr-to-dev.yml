@@ -37,7 +37,7 @@ jobs:
     # Exécuter les tests Flask à l'intérieur du conteneur
     - name: Run Integration Tests
       run: |
-        docker exec rest_server pytest tests/
+        docker exec ml_ops_rest_server pytest tests/
 
     # Arrêter et nettoyer les conteneurs après les tests
     - name: Clean Up Docker Containers
