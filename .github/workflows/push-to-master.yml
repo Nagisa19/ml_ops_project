@@ -25,7 +25,7 @@ jobs:
     - name: Build and Push Backend Image
       uses: docker/build-push-action@v5
       with:
-        context: ./backend
+        context: ./app/backend
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/rest_server:latest
 
@@ -33,7 +33,7 @@ jobs:
     - name: Build and Push Frontend Image
       uses: docker/build-push-action@v5
       with:
-        context: ./frontend
+        context: ./app/frontend
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/front_react:latest
 
@@ -41,6 +41,6 @@ jobs:
     - name: Build and Push Web Server Image
       uses: docker/build-push-action@v5
       with:
-        context: ./web_server
+        context: ./app/web_server
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/web_server:latest
