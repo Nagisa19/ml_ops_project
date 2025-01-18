@@ -44,10 +44,3 @@ jobs:
       run: |
         cd app/
         docker-compose down
-
-    # Permettre une fusion manuelle si tout passe
-    - name: Approve Merge
-      if: success()
-      uses: hmarr/auto-approve-action@v4
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
