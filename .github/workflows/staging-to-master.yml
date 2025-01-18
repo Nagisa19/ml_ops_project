@@ -20,12 +20,11 @@ jobs:
       with:
         node-version: 22
 
-    # Installer Docker
-    - name: Install Docker
+    # Installer Docker compose
+    - name: Install Docker compose
       run: |
         sudo apt-get update
-        sudo apt-get install -y docker.io
-        sudo systemctl start docker
+        sudo apt-get install -y docker-compose
 
     # Lancer les conteneurs avec Docker Compose
     - name: Start Containers
