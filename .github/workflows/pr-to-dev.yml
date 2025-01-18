@@ -14,9 +14,11 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    # Configurer Docker
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+    # Installer Docker compose
+    - name: Install Docker compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
 
     # Construire et démarrer les conteneurs avec docker-compose
     - name: Start Flask App with Docker Compose
