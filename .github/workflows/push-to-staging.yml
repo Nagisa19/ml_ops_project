@@ -1,9 +1,10 @@
 name: Push to Staging
 
 on:
-  push:
-    branches:
-      - dev
+  workflow_run:
+    workflows: ["Pull Request to Dev"]
+    types:
+      - completed
 
 jobs:
   push-to-staging:
