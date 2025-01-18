@@ -67,6 +67,6 @@ jobs:
       if: success()
       run: |
         git fetch origin
-        git checkout master
-        git merge -X theirs origin/staging --no-edit --allow-unrelated-histories
-        git push origin master
+        git checkout staging
+        git branch -f master
+        git push origin master --force
