@@ -1,0 +1,68 @@
+name: Staging to Production
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Vérifier le code
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    # Installer Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+
+    # Installer Docker
+    - name: Install Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io
+        sudo systemctl start docker
+
+    # Lancer les conteneurs avec Docker Compose
+    - name: Start Containers
+      run: |
+        cd app/
+        docker-compose up -d
+
+    # Attendre que les conteneurs soient prêts
+    - name: Wait for Containers
+      run: |
+        sleep 10
+
+    # Naviguer dans le dossier frontend et installer les dépendances
+    - name: Install Frontend Dependencies
+      run: |
+        cd app/frontend
+        npm install
+
+    # Exécuter les tests E2E avec Cypress dans le dossier frontend
+    - name: Run Cypress E2E Tests
+      run: |
+        cd app/frontend
+        npx cypress run
+
+    # Arrêter et supprimer les conteneurs
+    - name: Stop Containers
+      run: |
+        cd app/
+        docker-compose down
+
+    # Pousser les changements vers la branche production (main)
+    - name: Push to Production Branch
+      if: success()
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git fetch origin
+        git checkout -b main origin/main || git checkout main
+        git merge --no-edit staging
+        git push origin main
