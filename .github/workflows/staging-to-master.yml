@@ -55,13 +55,13 @@ jobs:
         cd app/
         docker-compose down
 
-    # Pousser les changements vers la branche production (main)
+    # Pousser les changements vers la branche production (master)
     - name: Push to Production Branch
       if: success()
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git fetch origin
-        git checkout -b main origin/main || git checkout main
+        git checkout -b master origin/master || git checkout master
         git merge --no-edit staging
-        git push origin main
+        git push origin master
