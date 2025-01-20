@@ -8,6 +8,8 @@ on:
 
 jobs:
   build-and-push:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -45,3 +47,22 @@ jobs:
         context: ./app/nginx
         push: true
         tags: ${{ secrets.DOCKER_USERNAME }}/ml_ops_web_server:latest
+
+    # Step 2: Set up SSH Key for Ansible
+    - name: Configure SSH Key
+      run: |
+        echo "${{ secrets.ANSIBLE_SSH_KEY }}" > /tmp/id_rsa
+        chmod 600 /tmp/id_rsa
+
+    # Step 2: Set up Ansible
+    - name: Install Ansible
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ansible
+
+    # Step 3: Run Ansible Playbook
+    - name: Deploy Application with Ansible
+      run: |
+        ansible-playbook  -i ansible/inventories/setup.yml ansible/playbooks/deploy-playbook.yml
+      env:
+        ANSIBLE_HOST_KEY_CHECKING: "false"

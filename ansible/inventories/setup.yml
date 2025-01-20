@@ -1,0 +1,7 @@
+all:
+ vars:
+   ansible_user: azureuser
+   ansible_ssh_private_key_file: /home/clestrat/.ssh/deployementVm_key.pem
+ children:
+   prod:
+     hosts: ml-ops.francecentral.cloudapp.azure.com

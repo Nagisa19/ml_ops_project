@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/proxy
+- name: Launch nginx HTTP server container
+  docker_container:
+    name: ml_ops_web_server
+    image: clestrat/ml_ops_web_server:latest
+    networks:
+      - name: srv_private
+    ports:
+      - "80:80"
+      - "443:443"
+    state: started
+    restart_policy: always
