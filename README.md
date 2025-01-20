@@ -26,4 +26,4 @@
      ```
      Replace `<storage account key>` with the key associated with your Azure Storage account.
 
-## Need update for the missing infos
+## Need update for the missing infos !
