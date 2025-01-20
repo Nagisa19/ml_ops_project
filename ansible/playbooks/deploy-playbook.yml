@@ -1,0 +1,35 @@
+- name: Deploy Application
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: Test connection
+      ping:
+
+    - name: Check if Docker is installed
+      command: docker --version
+      register: docker_check
+      ignore_errors: true
+
+    - name: Include Install Docker role
+      include_role:
+        name: ansible/roles/docker
+      when: docker_check.failed
+
+    - name: Include Create Network role
+      include_role:
+        name: ansible/roles/network
+
+    - name: Include Launch Backend role
+      include_role:
+        name: ansible/roles/backend
+
+    - name: Include Launch Frontend role
+      include_role:
+        name: ansible/roles/frontend
+
+    - name: Include Launch Proxy role
+      include_role:
+        name: ansible/roles/proxy
+

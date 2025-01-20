@@ -1,0 +1,11 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/frontend
+- name: Launch React.js container
+  docker_container:
+    name: ml_ops_front_react
+    image: clestrat/ml_ops_front_react:latest
+    networks:
+      - name: srv_private
+    state: started
+    restart_policy: always
