@@ -1,0 +1,7 @@
+[core]
+    no_scm = True
+    remote = myremote
+['remote "myremote"']
+    url = azure://mlopsdata
+    account_name = mldatablobstorage
+    account_key = pYfT4IDSOWsaU79JWWwT7+2+nB5T7kfVliqYNaSufOMfE23ScJnHyvxMi8b5G2claQZH7LpyLvJa+ASt9Bqgag==
