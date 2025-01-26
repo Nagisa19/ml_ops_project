@@ -18,6 +18,25 @@ except FileNotFoundError:
 
 @prediction_blueprint.route('/predict', methods=['POST'])
 def predict():
+    """
+    Gère les requêtes POST à la route '/predict' pour effectuer une prédiction à partir des données fournies.
+
+    Cette fonction :
+    - Vérifie que le type de contenu de la requête est 'application/json'.
+    - Extrait et valide les données de la requête JSON, en s'assurant que la clé 'features' est présente.
+    - Convertit les données de 'features' en DataFrame pour le modèle.
+    - Vérifie que toutes les colonnes nécessaires pour la prédiction sont présentes.
+    - Utilise un pipeline de machine learning pour effectuer une prédiction.
+    - Retourne le résultat de la prédiction sous forme de réponse JSON.
+
+    :return: Une réponse JSON contenant :
+        - 'prediction' (float) : La prédiction générée par le modèle.
+        - Ou 'error' (str) : Un message d'erreur en cas de problème.
+        - Statut HTTP correspondant :
+            - 200 : Succès de la prédiction.
+            - 400 : Erreur de validation des données.
+            - 500 : Erreur interne du serveur.
+    """
     try:
         # Vérifier que le Content-Type est bien 'application/json'
         if not request.is_json:
