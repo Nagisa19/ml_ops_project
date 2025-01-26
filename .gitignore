@@ -173,3 +173,4 @@ cython_debug/
 
 #data
 model_training/data/iris.csv
+model_training/gradient_boosting.pkl
