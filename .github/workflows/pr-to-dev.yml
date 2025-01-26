@@ -21,7 +21,7 @@ jobs:
     # Init un dépôt DVC
     - name: Check DVC Repository
       run: |
-        dvc init
+        dvc init --no-scm
 
     # Configurer le remote Azure pour DVC
     - name: Configure DVC Azure Remote
