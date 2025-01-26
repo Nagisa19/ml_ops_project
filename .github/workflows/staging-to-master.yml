@@ -29,6 +29,27 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y docker-compose
 
+    # Configurer DVC avec l'action officielle
+    - name: Setup DVC
+      uses: iterative/setup-dvc@v2
+
+    # Init un dépôt DVC
+    - name: Check DVC Repository
+      run: |
+        dvc init --no-scm
+
+    # Configurer le remote Azure pour DVC
+    - name: Configure DVC Azure Remote
+      run: |
+        dvc remote add -d azure-remote azure://${{ secrets.AZURE_BLOB_STORAGE }}
+        dvc remote modify azure-remote account_name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+        dvc remote modify azure-remote account_key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+
+    # Pull le modèle via DVC
+    - name: Pull Gradient Boosting Model
+      run: |
+        dvc pull app/backend/model/gradient_boosting.pkl.dvc
+
     # Lancer les conteneurs avec Docker Compose
     - name: Start Containers
       run: |
@@ -38,7 +59,10 @@ jobs:
     # Attendre que les conteneurs soient prêts
     - name: Wait for Containers
       run: |
-        sleep 10
+        until curl -X GET http://localhost/api/; do
+          echo "Waiting for app to start...";
+          sleep 5;
+        done
 
     # Naviguer dans le dossier frontend et installer les dépendances
     - name: Install Frontend Dependencies
