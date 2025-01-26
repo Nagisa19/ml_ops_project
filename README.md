@@ -50,6 +50,8 @@
 
 - Run the following commands :
   ```bash
+  dvc pull app/backend/model/gradient_boosting.pkl.dvc
+  
   cd app
 
   docker-compose up -d --build
