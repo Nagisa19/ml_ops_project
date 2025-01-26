@@ -27,3 +27,6 @@
      Replace `<storage account key>` with the key associated with your Azure Storage account.
 
 ## Need update for the missing infos !
+
+access website at : 
+- [http://ml-ops.francecentral.cloudapp.azure.com](http://ml-ops.francecentral.cloudapp.azure.com)
